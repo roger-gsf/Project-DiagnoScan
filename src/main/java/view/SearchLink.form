@@ -63,8 +63,11 @@
                           <Component id="btnSearch" min="-2" pref="150" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                          <Component id="lblSearchLink" alignment="1" min="-2" pref="117" max="-2" attributes="0"/>
-                          <Component id="txtSearch" min="-2" pref="125" max="-2" attributes="0"/>
+                          <Component id="txtSearch" alignment="1" min="-2" pref="125" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <Component id="lblSearchLink" min="-2" pref="117" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <EmptySpace pref="44" max="32767" attributes="0"/>
@@ -157,7 +160,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Search by id link:"/>
+            <Property name="text" type="java.lang.String" value="Search link by id:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnSearch">

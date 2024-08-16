@@ -1,22 +1,11 @@
 package view;
 
 import controller.Controller_DS;
-import controller.Controller_Symptom;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import model.Symptom;
 
 public class SearchLink extends javax.swing.JFrame {
 
@@ -76,7 +65,7 @@ public class SearchLink extends javax.swing.JFrame {
         lblSearchLink.setBackground(new java.awt.Color(255, 255, 255));
         lblSearchLink.setFont(new java.awt.Font("Franklin Gothic Heavy", 2, 12)); // NOI18N
         lblSearchLink.setForeground(new java.awt.Color(0, 0, 0));
-        lblSearchLink.setText("Search by id link:");
+        lblSearchLink.setText("Search link by id:");
 
         btnSearch.setFont(new java.awt.Font("Franklin Gothic Heavy", 2, 12)); // NOI18N
         btnSearch.setForeground(new java.awt.Color(0, 0, 0));
@@ -125,8 +114,10 @@ public class SearchLink extends javax.swing.JFrame {
                         .addGap(83, 83, 83)
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpnInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(lblSearchLink, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpnInputLayout.createSequentialGroup()
+                            .addGap(8, 8, 8)
+                            .addComponent(lblSearchLink, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
         jpnInputLayout.setVerticalGroup(
@@ -195,22 +186,14 @@ public class SearchLink extends javax.swing.JFrame {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         int selectedRow = tblData.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Select a link to delete", "Advice", JOptionPane.WARNING_MESSAGE);
+            showWarningMessage("Select a link to delete", "Advice");
             return;
         }
 
         int id_ds = (int) tblData.getValueAt(selectedRow, 0);
 
-        int option = JOptionPane.showConfirmDialog(this, "You're sure you want to delete this link?", "Confirm exclusion", JOptionPane.YES_NO_OPTION);
-        if (option == JOptionPane.YES_OPTION) {
-            try {
-                Controller_DS.deleteDS(id_ds);
-                JOptionPane.showMessageDialog(this, "Link deleted successfully!");
-                // Update the table after the exclusion:
-                searchDS();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error deleting link: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
+        if (showConfirmDialog("You're sure you want to delete this link?", "Confirm exclusion")) {
+            deleteLink(id_ds);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -223,7 +206,7 @@ public class SearchLink extends javax.swing.JFrame {
         try {
             searchDS();
         } catch (SQLException ex) {
-            Logger.getLogger(SearchLink.class.getName()).log(Level.SEVERE, null, ex);
+            logException(SearchLink.class.getName(), ex);
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -271,83 +254,48 @@ public class SearchLink extends javax.swing.JFrame {
     private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 
+    private void deleteLink(int id) {
+        try {
+            Controller_DS.deleteDS(id);
+            showInfoMessage("Link deleted successfully!");
+            searchDS();
+        } catch (SQLException ex) {
+            showErrorMessage("Error deleting link: " + ex.getMessage());
+        }
+    }
+
     public void searchDS() throws SQLException {
-        String idString = (txtSearch.getText()).trim();
+        String idString = txtSearch.getText().trim();
+
+        if (idString.isEmpty() || Integer.parseInt(idString) <= 0) {
+            showWarningMessage("Please enter a valid ID greater than 0.", "Invalid Input");
+            return;
+        }
+
         DefaultTableModel dtm = (DefaultTableModel) tblData.getModel();
         dtm.setRowCount(0);
 
         Controller_DS.searchDS(idString, dtm);
     }
 
-    private static void alterDialog(int symptom_id, String symptom_name, String symptom_desc) {
+    private void showWarningMessage(String message, String title) {
+        JOptionPane.showMessageDialog(this, message, title, JOptionPane.WARNING_MESSAGE);
+    }
 
-        // Criação dos componentes
-        JLabel idLabel = new JLabel("ID: " + symptom_id);
-        JTextField symptomField = new JTextField(symptom_name, 20);
-        JTextField descField = new JTextField(symptom_desc, 20);
-        JButton alterButton = new JButton("Save");
-        JButton cancelButton = new JButton("Cancel");
+    private boolean showConfirmDialog(String message, String title) {
+        int option = JOptionPane.showConfirmDialog(this, message, title, JOptionPane.YES_NO_OPTION);
+        return option == JOptionPane.YES_OPTION;
+    }
 
-        // Painel para organizar os componentes
-        JPanel panel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+    private void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        panel.add(idLabel, gbc);
+    private void showInfoMessage(String message) {
+        JOptionPane.showMessageDialog(this, message, "Information", JOptionPane.INFORMATION_MESSAGE);
+    }
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        panel.add(new JLabel("Symptom:"), gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        panel.add(symptomField, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        panel.add(new JLabel("Description:"), gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        panel.add(descField, gbc);
-
-        // Criação do JOptionPane
-        Object[] options = {alterButton, cancelButton};
-        JOptionPane optionPane = new JOptionPane(panel, JOptionPane.PLAIN_MESSAGE, JOptionPane.DEFAULT_OPTION, null, options, null);
-
-        // Criação do JDialog
-        JDialog dialog = optionPane.createDialog("Alterating symptom: " + symptom_name);
-
-        // Ação do botão Alterar
-        alterButton.addActionListener((ActionEvent e) -> {
-            // Lógica para alterar as informações
-            String newSymptom = symptomField.getText();
-            String newDesc = descField.getText();
-
-            Symptom sintoma = new Symptom();
-            sintoma.setId(symptom_id);
-            sintoma.setName(newSymptom);
-            sintoma.setDesc(newDesc);
-
-            try {
-                Controller_Symptom.updateSymptom(sintoma);
-                JOptionPane.showMessageDialog(dialog, "Symptom successfully updated!");
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(dialog, "Error updating symptom: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
-            dialog.dispose();
-        });
-
-        // Cancel button action:
-        cancelButton.addActionListener((ActionEvent e) -> {
-            dialog.dispose();
-        });
-
-        // Dialog exibition:
-        dialog.setVisible(true);
+    private void logException(String className, Exception ex) {
+        Logger.getLogger(className).log(Level.SEVERE, null, ex);
     }
 }
