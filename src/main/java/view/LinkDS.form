@@ -9,7 +9,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="0"/>
-    <Property name="title" type="java.lang.String" value="Vincular sintoma a doen&#xe7;a"/>
+    <Property name="title" type="java.lang.String" value="Link disease &amp; symptom"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -38,7 +38,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jpnTitle" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jpnInput" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -97,9 +97,9 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                   <Component id="lblDisease" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtDisease" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="rbtnDiseaseId" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -113,7 +113,7 @@
                       <Component id="rbtnSymptomId" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="rbtnSymptomName" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="26" max="32767" attributes="0"/>
+                  <EmptySpace pref="28" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnSave" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="btnCancel" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>

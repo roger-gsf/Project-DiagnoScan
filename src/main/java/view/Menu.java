@@ -22,7 +22,7 @@ public class Menu extends javax.swing.JFrame {
         btnPesquisarVinculos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Home");
+        setTitle("Menu");
 
         jpanelTitulo.setBackground(new java.awt.Color(1, 106, 67));
 
@@ -203,31 +203,31 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnPesquisarDoencaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarDoencaActionPerformed
-        DiseaseSearch tpd = new DiseaseSearch(this);
+        SearchDisease tpd = new SearchDisease(this);
         this.setVisible(false);
         tpd.setVisible(true);
     }//GEN-LAST:event_btnPesquisarDoencaActionPerformed
 
     private void btnPesquisarSintomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarSintomaActionPerformed
-        SymptomSearch tps = new SymptomSearch(this);
+        SearchSymptom tps = new SearchSymptom(this);
         this.setVisible(false);
         tps.setVisible(true);
     }//GEN-LAST:event_btnPesquisarSintomaActionPerformed
 
     private void btnCadastrarDoencaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarDoencaActionPerformed
-        DiseaseRegistration tcd = new DiseaseRegistration(this);
+        RegisterDisease tcd = new RegisterDisease(this);
         this.setVisible(false);
         tcd.setVisible(true);
     }//GEN-LAST:event_btnCadastrarDoencaActionPerformed
 
     private void btnCadastrarSintomaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarSintomaActionPerformed
-        SymptomRegistration tcs = new SymptomRegistration(this);
+        RegisterSymptom tcs = new RegisterSymptom(this);
         this.setVisible(false);
         tcs.setVisible(true);
     }//GEN-LAST:event_btnCadastrarSintomaActionPerformed
 
     private void btnPesquisarVinculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarVinculosActionPerformed
-        LinkSearch tvd = new LinkSearch(this);
+        SearchLink tvd = new SearchLink(this);
         this.setVisible(false);
         tvd.setVisible(true);
     }//GEN-LAST:event_btnPesquisarVinculosActionPerformed
@@ -245,23 +245,15 @@ public class Menu extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
-
+        
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Menu().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Menu().setVisible(true);
         });
     }
 
